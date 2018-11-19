@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using System.IO;
 using ToolsCSharp;
 
+
 using DBDataReader = System.Data.SqlClient.SqlDataReader;
 
 namespace CustomerClasses
@@ -37,12 +38,12 @@ namespace CustomerClasses
         /// <summary>
         /// 
         /// </summary>
-        public char state = '';
+       // public string state = '';
 
         /// <summary>
         /// 
         /// </summary>
-        public char zipCode = '';
+       // public char zipCode = '';
 
         /// <summary>
         /// ConcurrencyID. See main docs, don't manipulate directly
@@ -61,8 +62,8 @@ namespace CustomerClasses
             c.name = this.name;
             c.address = this.address;
             c.city = this.city;
-            c.state = this.state;
-            c.zipCode = this.zipCode;
+            //c.state = this.state;
+            //c.zipCode = this.zipCode;
             c.ConcurrencyID = this.ConcurrencyID;
         }
 
