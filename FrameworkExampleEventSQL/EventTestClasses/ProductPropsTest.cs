@@ -52,7 +52,15 @@ namespace EventTestClasses
         [Test]
         public void TestSetState()
         {
-
+            string pString = testp.GetState();
+            ProductProps p2 = new ProductProps();
+            p2.SetState(pString);
+            Assert.AreEqual(testp.ID, p2.ID);
+            Assert.AreEqual(testp.quantity, p2.quantity);
+            Assert.AreEqual(testp.code, p2.code);
+            Assert.AreEqual(testp.price, p2.price);
+            Assert.AreEqual(testp.description, p2.description);
+            Assert.AreEqual(testp.ConcurrencyID, p2.ConcurrencyID);
         }
     }
 }
