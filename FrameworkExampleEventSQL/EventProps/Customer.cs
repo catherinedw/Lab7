@@ -11,7 +11,7 @@ using DBDataReader = System.Data.SqlClient.SqlDataReader;
 using System.Data.SqlClient;
 
 
-namespace CustometrPropsClasses
+namespace EventPropsClasses
 
 {
     public class CustomerProps : IBaseProps

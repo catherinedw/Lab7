@@ -10,7 +10,7 @@ using ToolsCSharp;
 using DBDataReader = System.Data.SqlClient.SqlDataReader;
 using System.Data.SqlClient;
 
-namespace ProductPropsClasses
+namespace EventPropsClasses
 {
     public class ProductProps : IBaseProps
     {

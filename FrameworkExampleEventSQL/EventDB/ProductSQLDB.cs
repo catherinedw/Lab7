@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using EventPropsClasses;
+using ProductPropsClasses;
 using ToolsCSharp;
 
 using System.Data;
@@ -23,6 +23,19 @@ namespace EventDBClasses
 {
     public class ProductSQLDB : DBBase, IReadDB, IWriteDB
     {
+        public ProductSQLDB()
+        {
+        }
+
+        public ProductSQLDB(string cnString) : base(cnString)
+        {
+        }
+
+        public ProductSQLDB(DBConnection cn) : base(cn)
+        {
+        }
+
+
         public IBaseProps Create(IBaseProps props)
         {
             throw new NotImplementedException();
@@ -34,8 +47,78 @@ namespace EventDBClasses
         }
 
         public IBaseProps Retrieve(object key)
+    {
+            DBDataReader data = null;
+            ProductProps props = new ProductProps();
+            DBCommand command = new DBCommand();
+
+            command.CommandText = "usp_ProductSelect";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@ProductID", SqlDbType.Int);
+            command.Parameters["@ProductID"].Value = (Int32)key;
+
+            try
+            {
+                data = RunProcedure(command);
+                if (!data.IsClosed)
+                {
+                    if (data.Read())
+                    {
+                        props.SetState(data);
+                    }
+                    else
+                        throw new Exception("Record does not exist in the database.");
+                }
+                return props;
+            }
+            catch (Exception e)
+            {
+                // log this exception
+                throw;
+            }
+            finally
+            {
+                if (data != null)
+                {
+                    if (!data.IsClosed)
+                        data.Close();
+                }
+            }
+        } //end of Retrieve()
+
+        // retrieves a list of objects
+        public object RetrieveAll(Type type)
         {
-            throw new NotImplementedException();
+            List<ProductProps> list = new List<ProductProps>();
+            DBDataReader reader = null;
+            ProductProps props;
+
+            try
+            {
+                reader = RunProcedure("usp_ProductSelectAll");
+                if (!reader.IsClosed)
+                {
+                    while (reader.Read())
+                    {
+                        props = new ProductProps();
+                        props.SetState(reader);
+                        list.Add(props);
+                    }
+                }
+                return list;
+            }
+            catch (Exception e)
+            {
+                // log this exception
+                throw;
+            }
+            finally
+            {
+                if (!reader.IsClosed)
+                {
+                    reader.Close();
+                }
+            }
         }
 
         public object RetrieveAll(Type type)
