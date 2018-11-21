@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ProductPropsClasses;
+using EventPropsClasses;
 using ToolsCSharp;
 
 using System.Data;
@@ -23,24 +23,57 @@ namespace EventDBClasses
 {
     public class ProductSQLDB : DBBase, IReadDB, IWriteDB
     {
-        public ProductSQLDB()
-        {
-        }
+        public ProductSQLDB(){ }
 
-        public ProductSQLDB(string cnString) : base(cnString)
-        {
-        }
+        public ProductSQLDB(string cnString) : base(cnString){  }
 
-        public ProductSQLDB(DBConnection cn) : base(cn)
-        {
+        public ProductSQLDB(DBConnection cn) : base(cn) {
         }
 
 
-        public IBaseProps Create(IBaseProps props)
+        public IBaseProps Create(IBaseProps p)
         {
-            throw new NotImplementedException();
-        }
+            int rowsAffected = 0;
+            ProductProps props = (ProductProps)p;
 
+            DBCommand command = new DBCommand();
+            command.CommandText = "usp_ProductCreate";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@ProductID", SqlDbType.Int);
+            command.Parameters.Add("@ProductCode", SqlDbType.Char);
+            command.Parameters.Add("@Description", SqlDbType.NVarChar);
+            command.Parameters.Add("@OnHandQuantity", SqlDbType.Int);
+            command.Parameters.Add("@UnitPrice", SqlDbType.Money);
+            //Attenetion
+            command.Parameters[0].Direction = ParameterDirection.Output;
+            command.Parameters["@ProductCode"].Value = props.code;
+            command.Parameters["@Description"].Value = props.description;
+            command.Parameters["@OnHandQuantity"].Value = props.quantity;
+            command.Parameters["@UnitPrice"].Value = props.price;
+
+            try
+            {
+                rowsAffected = RunNonQueryProcedure(command);
+                if (rowsAffected == 1)
+                {
+                    props.ID = (int)command.Parameters[0].Value;
+                    props.ConcurrencyID = 1;
+                    return props;
+                }
+                else
+                    throw new Exception("Unable to insert record. " + props.ToString());
+            }
+            catch (Exception e)
+            {
+                // log this error
+                throw;
+            }
+            finally
+            {
+                if (mConnection.State == ConnectionState.Open)
+                    mConnection.Close();
+            }
+        }
         public bool Delete(IBaseProps props)
         {
             throw new NotImplementedException();
@@ -121,10 +154,6 @@ namespace EventDBClasses
             }
         }
 
-        public object RetrieveAll(Type type)
-        {
-            throw new NotImplementedException();
-        }
 
         public bool Update(IBaseProps props)
         {

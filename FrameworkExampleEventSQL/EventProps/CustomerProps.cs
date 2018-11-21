@@ -20,7 +20,7 @@ namespace EventPropsClasses
         /// <summary>
         /// 
         /// </summary>
-        public int customerID = 0;//Int32.MinValue;
+        public int customerID = Int32.MinValue;
 
         /// <summary>
         /// 
@@ -40,12 +40,12 @@ namespace EventPropsClasses
         /// <summary>
         /// 
         /// </summary>
-       // public string state = '';
+        public string state = "";
 
         /// <summary>
         /// 
         /// </summary>
-       // public char zipCode = '';
+        public string zipCode = "";
 
         /// <summary>
         /// ConcurrencyID. See main docs, don't manipulate directly
@@ -59,14 +59,7 @@ namespace EventPropsClasses
         /// </summary>
         public CustomerProps()
         {
-            CustomerProps c = new CustomerProps();
-            c.customerID = this.customerID;
-            c.name = this.name;
-            c.address = this.address;
-            c.city = this.city;
-            //c.state = this.state;
-            //c.zipCode = this.zipCode;
-            c.ConcurrencyID = this.ConcurrencyID;
+            
         }
 
         public object Clone()

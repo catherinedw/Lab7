@@ -30,6 +30,7 @@ namespace CustomerTestClasses
         [Test]
         public void TestCustomer()
         {
+            
             //assert that areEqual all the properties
             Assert.AreEqual(testc.customerID, 20);
             Assert.AreEqual(testc.name, "Minnie Mouse");
@@ -38,6 +39,7 @@ namespace CustomerTestClasses
             //Assert.AreEqual(testc.state, 'FL');
             //Assert.AreEqual(testc.zipCode, '80487');
             Assert.AreEqual(testc.ConcurrencyID, 1);
+            
         }
     }
 }

@@ -93,7 +93,7 @@ namespace EventPropsClasses
         {
             this.ID = (Int32)dr["ProductID"];
             this.quantity = (Int32)dr["OnHandQuantity"];
-            this.code = (string)dr["ProductCode"];
+            this.code = ((string)dr["ProductCode"]).Trim();
             this.description = (string)dr["Description"];
             this.price = (decimal)dr["UnitPrice"];
             this.ConcurrencyID = (Int32)dr["ConcurrencyID"];
