@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using EventPropsClasses;
+using ProductPropsClasses;
 
-namespace EventTestClasses
+namespace ProductTestClasses
 {
     [TestFixture]
     public class ProductPropsTest

@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using CustomerClasses;
+using CustometrPropsClasses;
 
 
-namespace EventTestClasses
+namespace CustomerTestClasses
 {
     [TestFixture]
     public class CustomerTest
     {
-        Customer testc;
+        CustomerProps testc;
 
         [SetUp]
         public void Setup()
         {
-            testc = new Customer();
-            testc.customerID = 1;
+            testc = new CustomerProps();
+            testc.customerID = 20;
             testc.name = "Minnie Mouse";
             testc.address = "12 Coconut Drive";
             testc.city = "Key Largo";
@@ -31,7 +31,7 @@ namespace EventTestClasses
         public void TestCustomer()
         {
             //assert that areEqual all the properties
-            Assert.AreEqual(testc.customerID, 1);
+            Assert.AreEqual(testc.customerID, 20);
             Assert.AreEqual(testc.name, "Minnie Mouse");
             Assert.AreEqual(testc.address, "12 Coconut Drive");
             Assert.AreEqual(testc.city, "Key Largo");

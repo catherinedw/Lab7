@@ -7,18 +7,20 @@ using System.Xml.Serialization;
 using System.IO;
 using ToolsCSharp;
 
-
 using DBDataReader = System.Data.SqlClient.SqlDataReader;
+using System.Data.SqlClient;
 
-namespace CustomerClasses
+
+namespace CustometrPropsClasses
+
 {
-    public class Customer
+    public class CustomerProps : IBaseProps
     {
         #region instance variables
         /// <summary>
         /// 
         /// </summary>
-        public int customerID = Int32.MinValue;
+        public int customerID = 0;//Int32.MinValue;
 
         /// <summary>
         /// 
@@ -55,9 +57,9 @@ namespace CustomerClasses
         /// <summary>
         /// Constructor. 
         /// </summary>
-        public Customer()
+        public CustomerProps()
         {
-            Customer c = new Customer();
+            CustomerProps c = new CustomerProps();
             c.customerID = this.customerID;
             c.name = this.name;
             c.address = this.address;
@@ -67,8 +69,44 @@ namespace CustomerClasses
             c.ConcurrencyID = this.ConcurrencyID;
         }
 
-        #endregion
+        public object Clone()
+        {
+            throw new NotImplementedException();
+        }
 
+        public string GetState()
+        {
+            XmlSerializer serializer = new XmlSerializer(this.GetType());
+            StringWriter writer = new StringWriter();
+            serializer.Serialize(writer, this);
+            return writer.GetStringBuilder().ToString();
+        }
+
+        public void SetState(string xml)
+        {
+            XmlSerializer serializer = new XmlSerializer(this.GetType());
+            StringReader reader = new StringReader(xml);
+            CustomerProps c = (CustomerProps)serializer.Deserialize(reader);
+            this.customerID = c.customerID;
+            this.name = c.name;
+            this.address = c.address;
+            this.city= c.city;
+            //this.state= c.state;
+            //this.zipCode= c.zipCode;
+            this.ConcurrencyID = c.ConcurrencyID;
+        }
+
+        public void SetState(DBDataReader dr)
+        {
+            this.customerID = (Int32)dr["CustomerID"];
+            this.name = (string)dr["Name"];
+            this.address = (string)dr["Address"];
+            this.city = (string)dr["City"];
+            //this.state = (decimal)dr["State"];
+            //this.zipCode = (decimal)dr["ZipCode"];
+            this.ConcurrencyID = (Int32)dr["ConcurrencyID"];
+        }
     
+        #endregion
     }
 }
