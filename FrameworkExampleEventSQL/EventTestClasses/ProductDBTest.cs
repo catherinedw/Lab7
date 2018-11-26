@@ -41,6 +41,17 @@ namespace EventTestClasses
         }
 
         [Test]
+        public void TestNewEventConstructor()
+        {
+            /*
+            // not in Data Store - no id
+            Event e = new Event(dataSource);
+            Console.WriteLine(e.ToString());
+            Assert.Greater(e.ToString().Length, 1);
+            */
+        }
+
+        [Test]
         public void TestRetrieve()
         {
             props = (ProductProps)db.Retrieve(1);
@@ -53,7 +64,7 @@ namespace EventTestClasses
         public void TestRetrieveAll()
         {
             list = (List<ProductProps>)db.RetrieveAll(props.GetType());
-            Assert.AreEqual(list.Count, 17);
+            Assert.AreEqual(list.Count, 16);
         }
 
         [Test]
@@ -67,5 +78,43 @@ namespace EventTestClasses
             Assert.AreEqual("XXXX", props.code);
             Assert.AreEqual(99.99, props.price);
         }
+
+
+        [Test]
+        public void TestUpdate()
+        {
+            /*
+            Event e = new Event(1, dataSource);
+            e.UserID = 3;
+            e.Title = "Edited Event";
+            e.Save();
+
+            e = new Event(1, dataSource);
+            Assert.AreEqual(e.ID, 1);
+            Assert.AreEqual(e.UserID, 3);
+            Assert.AreEqual(e.Title, "Edited Event");
+            */
+        }
+        [Test]
+        public void TestDelete()
+        {
+            /*
+            Event e = new Event(2, dataSource);
+            e.Delete();
+            e.Save();
+            Assert.Throws<Exception>(() => new Event(2, dataSource));
+
+             * */
+        }
+
+        [Test]
+        public void TestStaticDelete()
+        {
+            /*
+            Event.Delete(2, dataSource);
+            Assert.Throws<Exception>(() => new Event(2, dataSource));
+            */    
+        }
+
     }
 }
