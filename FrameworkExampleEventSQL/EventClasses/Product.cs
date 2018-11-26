@@ -59,7 +59,6 @@ namespace EventClasses
         }
         #endregion
 
-
         #region constructors
         public Product() : base()
         {
@@ -108,7 +107,7 @@ namespace EventClasses
         /// <summary>
         /// Read/Write property. 
         /// </summary>
-        public string code
+        public string ProductCode
         {
             get
             {
@@ -137,7 +136,7 @@ namespace EventClasses
         /// <summary>
         /// Read/Write property. 
         /// </summary>
-        public string description
+        public string Description
         {
             get
             {
@@ -148,7 +147,7 @@ namespace EventClasses
             {
                 if (!(value == ((ProductProps)mProps).description))
                 {
-                    if (value.Length >= 1 && value.Length <= 10)
+                    if (value.Length >= 1 && value.Length <= 50)
                     {
                         mRules.RuleBroken("Description", false);
                         ((ProductProps)mProps).description = value;
@@ -157,7 +156,7 @@ namespace EventClasses
 
                     else
                     {
-                        throw new ArgumentOutOfRangeException("Description must be between 1 and 10 characters");
+                        throw new ArgumentOutOfRangeException("Description must be between 1 and 50 characters");
                     }
                 }
             }
@@ -165,7 +164,7 @@ namespace EventClasses
         /// <summary>
         /// Read/Write property. 
         /// </summary>
-        public decimal price
+        public decimal Price
         {
             get
             {
@@ -187,6 +186,35 @@ namespace EventClasses
                     {
                         throw new ArgumentException("Price must be a positive number");
                     }       
+                }
+            }
+        }
+
+        /// <summary>
+        /// Read/Write property. 
+        /// </summary>
+        public int OnHandQuantity
+        {
+            get
+            {
+                return ((ProductProps)mProps).quantity;
+            }
+
+            set
+            {
+                if (!(value == ((ProductProps)mProps).quantity))
+                {
+                    if (value >= 0)
+                    {
+                        mRules.RuleBroken("Quantity", false);
+                        ((ProductProps)mProps).quantity = value;
+                        mIsDirty = true;
+                    }
+
+                    else
+                    {
+                        throw new ArgumentException("Quantity must be a positive number");
+                    }
                 }
             }
         }
