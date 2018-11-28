@@ -55,16 +55,64 @@ namespace EventTestClasses
             p.OnHandQuantity = 10;
 
             p.Save();
-        
-            ProductDBTests p2 = TestCreateNewProduct(p.ID, dataSource);
-            /*
+
+            Product p2 =new Product(p.ID, dataSource);
             Assert.AreEqual(p.ID, p2.ID);
-            Assert.AreEqual(p.Code, p2.Code);
+            //Assert.AreEqual(p.ProductCode, p2.ProductCode);
             Assert.AreEqual(p.ProductCode, "ABCD");
-            Assert.AreEqual(p.UnitPrice, 25.99m);
-            Assert.AreEqual(p.Quantity, 10);
+            Assert.AreEqual(p.Price, 25.99m);
+            Assert.AreEqual(p.OnHandQuantity, 10);
 
             Console.WriteLine(p.ToString());
+        }
+
+
+        [Test]
+        public void TestUpdate()
+        {
+            Product p = new Product(17, dataSource);
+
+            p.ProductCode = "ABCD";
+            p.Description = "This is a test product";
+            p.Price = 25.99m;
+            p.OnHandQuantity = 10;
+           
+            p.Save();
+
+            Assert.AreEqual(p.ProductCode, "ABCD");
+
+            p.ProductCode = "EFGH";
+
+            Assert.AreEqual(p.ID, 17);
+            Assert.AreEqual(p.ProductCode, "EFGH");
+
+        }
+        [Test]
+        public void TestDelete()
+        {
+            Product p = new Product(17, dataSource);
+
+            p.ProductCode = "ABCD";
+            p.Description = "This is a test product";
+            p.Price = 25.99m;
+            p.OnHandQuantity = 10;
+
+            p.Save();
+
+            Assert.AreEqual(p.ID, 17);
+
+            p.Delete();
+
+            Assert.Throws<Exception>(() => new Product(17, dataSource));
+
+        }
+
+        [Test]
+        public void TestStaticDelete()
+        {
+            /*
+            Event.Delete(2, dataSource);
+            Assert.Throws<Exception>(() => new Event(2, dataSource));
             */
         }
     }
