@@ -78,5 +78,28 @@ namespace EventTestClasses
             Assert.AreEqual("XXXX", props.code);
             Assert.AreEqual(99.99, props.price);
         }
+
+        [Test]
+        public void TestDelete()
+        {
+            
+        }
+
+        [Test]
+        public void TestUpdate()
+        {
+            /*ProductProps p2 = (ProductProps)db.Update(testp);
+            p2.ID = 17;
+            p2.quantity = 50;
+  
+            Assert.AreEqual(p2.ID, 17);
+            Assert.AreEqual(p2.ConcurrencyID, 1);
+            Assert.AreEqual(p2.quantity, 50);
+
+            props = (ProductProps)db.Retrieve(17);
+            Assert.AreEqual("XXXX", props.code);
+            Assert.AreEqual(50, props.quantity);
+            */
+        }
     }
 }

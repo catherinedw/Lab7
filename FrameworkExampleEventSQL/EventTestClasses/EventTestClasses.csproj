@@ -46,7 +46,8 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomerTest.cs" />
+    <Compile Include="CustomerDBTest.cs" />
+    <Compile Include="CustomerPropTest.cs" />
     <Compile Include="EventTests.cs" />
     <Compile Include="ProductTest.cs" />
     <Compile Include="ProductDBTest.cs" />

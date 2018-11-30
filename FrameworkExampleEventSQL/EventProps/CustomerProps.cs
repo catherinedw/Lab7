@@ -62,9 +62,20 @@ namespace EventPropsClasses
             
         }
 
+        /// <summary>
+        /// Clones this object.
+        /// </summary>
         public object Clone()
         {
-            throw new NotImplementedException();
+            CustomerProps c = new CustomerProps();
+            c.customerID = this.customerID;
+            c.name = this.name;
+            c.address = this.address;
+            c.city = this.city;
+            c.state = this.state;
+            c.zipCode = this.zipCode;
+            c.ConcurrencyID = this.ConcurrencyID;
+            return c;
         }
 
         public string GetState()
@@ -84,8 +95,8 @@ namespace EventPropsClasses
             this.name = c.name;
             this.address = c.address;
             this.city= c.city;
-            //this.state= c.state;
-            //this.zipCode= c.zipCode;
+            this.state= c.state;
+            this.zipCode= c.zipCode;
             this.ConcurrencyID = c.ConcurrencyID;
         }
 
@@ -95,8 +106,8 @@ namespace EventPropsClasses
             this.name = (string)dr["Name"];
             this.address = (string)dr["Address"];
             this.city = (string)dr["City"];
-            //this.state = (decimal)dr["State"];
-            //this.zipCode = (decimal)dr["ZipCode"];
+            this.state = (string)dr["State"];
+            this.zipCode = (string)dr["ZipCode"];
             this.ConcurrencyID = (Int32)dr["ConcurrencyID"];
         }
     

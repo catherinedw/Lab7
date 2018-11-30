@@ -64,6 +64,7 @@ namespace EventTestClasses
             Assert.AreEqual(p.OnHandQuantity, 10);
 
             Console.WriteLine(p.ToString());
+            Assert.Greater(p.ToString().Length, 1);
         }
 
 

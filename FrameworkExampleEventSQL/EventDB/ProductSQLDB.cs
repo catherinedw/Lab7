@@ -23,61 +23,13 @@ namespace EventDBClasses
 {
     public class ProductSQLDB : DBBase, IReadDB, IWriteDB
     {
+        #region Constructors
+
         public ProductSQLDB(){ }
-
         public ProductSQLDB(string cnString) : base(cnString){  }
-
-        public ProductSQLDB(DBConnection cn) : base(cn) {
-        }
-
-
-        public IBaseProps Create(IBaseProps p)
-        {
-            int rowsAffected = 0;
-            ProductProps props = (ProductProps)p;
-
-            DBCommand command = new DBCommand();
-            command.CommandText = "usp_ProductCreate";
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("@ProductID", SqlDbType.Int);
-            command.Parameters.Add("@ProductCode", SqlDbType.Char);
-            command.Parameters.Add("@Description", SqlDbType.NVarChar);
-            command.Parameters.Add("@OnHandQuantity", SqlDbType.Int);
-            command.Parameters.Add("@UnitPrice", SqlDbType.Money);
-            //Attenetion
-            command.Parameters[0].Direction = ParameterDirection.Output;
-            command.Parameters["@ProductCode"].Value = props.code;
-            command.Parameters["@Description"].Value = props.description;
-            command.Parameters["@OnHandQuantity"].Value = props.quantity;
-            command.Parameters["@UnitPrice"].Value = props.price;
-
-            try
-            {
-                rowsAffected = RunNonQueryProcedure(command);
-                if (rowsAffected == 1)
-                {
-                    props.ID = (int)command.Parameters[0].Value;
-                    props.ConcurrencyID = 1;
-                    return props;
-                }
-                else
-                    throw new Exception("Unable to insert record. " + props.ToString());
-            }
-            catch (Exception e)
-            {
-                // log this error
-                throw;
-            }
-            finally
-            {
-                if (mConnection.State == ConnectionState.Open)
-                    mConnection.Close();
-            }
-        }
-        public bool Delete(IBaseProps props)
-        {
-            throw new NotImplementedException();
-        }
+        public ProductSQLDB(DBConnection cn) : base(cn) { }
+        
+        #endregion
 
         public IBaseProps Retrieve(object key)
     {
@@ -154,10 +106,134 @@ namespace EventDBClasses
             }
         }
 
-
-        public bool Update(IBaseProps props)
+        public IBaseProps Create(IBaseProps p)
         {
-            throw new NotImplementedException();
+            int rowsAffected = 0;
+            ProductProps props = (ProductProps)p;
+
+            DBCommand command = new DBCommand();
+            command.CommandText = "usp_ProductCreate";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@ProductID", SqlDbType.Int);
+            command.Parameters.Add("@ProductCode", SqlDbType.Char);
+            command.Parameters.Add("@Description", SqlDbType.NVarChar);
+            command.Parameters.Add("@OnHandQuantity", SqlDbType.Int);
+            command.Parameters.Add("@UnitPrice", SqlDbType.Money);
+            //Attenetion
+            command.Parameters[0].Direction = ParameterDirection.Output;
+            command.Parameters["@ProductCode"].Value = props.code;
+            command.Parameters["@Description"].Value = props.description;
+            command.Parameters["@OnHandQuantity"].Value = props.quantity;
+            command.Parameters["@UnitPrice"].Value = props.price;
+
+            try
+            {
+                rowsAffected = RunNonQueryProcedure(command);
+                if (rowsAffected == 1)
+                {
+                    props.ID = (int)command.Parameters[0].Value;
+                    props.ConcurrencyID = 1;
+                    return props;
+                }
+                else
+                    throw new Exception("Unable to insert record. " + props.ToString());
+            }
+            catch (Exception e)
+            {
+                // log this error
+                throw;
+            }
+            finally
+            {
+                if (mConnection.State == ConnectionState.Open)
+                    mConnection.Close();
+            }
         }
+
+        public bool Delete(IBaseProps p)
+        {
+            ProductProps props = (ProductProps)p;
+            int rowsAffected = 0;
+
+            DBCommand command = new DBCommand();
+            command.CommandText = "usp_ProductDelete";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@ProductID", SqlDbType.Int);
+            command.Parameters.Add("@ConcurrencyID", SqlDbType.Int);
+            command.Parameters["@ProductID"].Value = props.ID;
+            command.Parameters["@ConcurrencyID"].Value = props.ConcurrencyID;
+
+            try
+            {
+                rowsAffected = RunNonQueryProcedure(command);
+                if (rowsAffected == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    string message = "Record cannot be deleted. It has been edited by another user.";
+                    throw new Exception(message);
+                }
+
+            }
+            catch (Exception e)
+            {
+                // log this exception
+                throw;
+            }
+            finally
+            {
+                if (mConnection.State == ConnectionState.Open)
+                    mConnection.Close();
+            }
+        }
+        public bool Update(IBaseProps p)
+        {
+            int rowsAffected = 0;
+            ProductProps props = (ProductProps)p;
+
+            DBCommand command = new DBCommand();
+            command.CommandText = "usp_ProductUpdate";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@ProductID", SqlDbType.Int);
+            command.Parameters.Add("@ProductCode", SqlDbType.Char);
+            command.Parameters.Add("@Description", SqlDbType.NVarChar);
+            command.Parameters.Add("@OnHandQuantity", SqlDbType.Int);
+            command.Parameters.Add("@UnitPrice", SqlDbType.Money);
+            command.Parameters.Add("@ConcurrencyID", SqlDbType.Int);
+
+            command.Parameters["@ProductID"].Value = props.ID;
+            command.Parameters["@ProductCode"].Value = props.code;
+            command.Parameters["@Description"].Value = props.description;
+            command.Parameters["@OnHandQuantity"].Value = props.quantity;
+            command.Parameters["@UnitPrice"].Value = props.price;
+            command.Parameters["@ConcurrencyID"].Value = props.ConcurrencyID;
+
+            try
+            {
+                rowsAffected = RunNonQueryProcedure(command);
+                if (rowsAffected == 1)
+                {
+                    props.ConcurrencyID++;
+                    return true;
+                }
+                else
+                {
+                    string message = "Record cannot be updated. It has been edited by another user.";
+                    throw new Exception(message);
+                }
+            }
+            catch (Exception e)
+            {
+                // log this exception
+                throw;
+            }
+            finally
+            {
+                if (mConnection.State == ConnectionState.Open)
+                    mConnection.Close();
+            }
+        } // end of Update()
     }
 }
