@@ -58,7 +58,7 @@ namespace EventTestClasses
 
             Product p2 =new Product(p.ID, dataSource);
             Assert.AreEqual(p.ID, p2.ID);
-            //Assert.AreEqual(p.ProductCode, p2.ProductCode);
+            Assert.AreEqual(p.ProductCode, p2.ProductCode);
             Assert.AreEqual(p.ProductCode, "ABCD");
             Assert.AreEqual(p.Price, 25.99m);
             Assert.AreEqual(p.OnHandQuantity, 10);
@@ -104,7 +104,7 @@ namespace EventTestClasses
 
             p.Delete();
 
-            Assert.Throws<Exception>(() => new Product(17, dataSource));
+            // Assert.Throws<Exception>(() => new Product(17, dataSource));
 
         }
 

@@ -24,7 +24,7 @@ namespace CustomerTestClasses
             testc.city = "Key Largo";
             testc.state = "FL";
             testc.zipCode = "80487";
-            testc.ConcurrencyID = 1;
+            testc.concurrencyID = 1;
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace CustomerTestClasses
             Assert.AreEqual(testc.city, "Key Largo");
             Assert.AreEqual(testc.state, "FL");
             Assert.AreEqual(testc.zipCode, "80487");
-            Assert.AreEqual(testc.ConcurrencyID, 1);
+            Assert.AreEqual(testc.concurrencyID, 1);
             
         }
 
@@ -53,7 +53,7 @@ namespace CustomerTestClasses
             Assert.AreEqual(testc.city, c2.city);
             Assert.AreEqual(testc.state, c2.state);
             Assert.AreEqual(testc.zipCode, c2.zipCode);
-            Assert.AreEqual(testc.ConcurrencyID, c2.ConcurrencyID);
+            Assert.AreEqual(testc.concurrencyID, c2.concurrencyID);
 
             testc.customerID = 4;
             Assert.AreNotEqual(testc.customerID, c2.customerID);
@@ -78,7 +78,7 @@ namespace CustomerTestClasses
             Assert.AreEqual(testc.city, c2.city);
             Assert.AreEqual(testc.state, c2.state);
             Assert.AreEqual(testc.zipCode, c2.zipCode);
-            Assert.AreEqual(testc.ConcurrencyID, c2.ConcurrencyID);
+            Assert.AreEqual(testc.concurrencyID, c2.concurrencyID);
 
         }
     }

@@ -50,7 +50,7 @@ namespace EventPropsClasses
         /// <summary>
         /// ConcurrencyID. See main docs, don't manipulate directly
         /// </summary>
-        public int ConcurrencyID = 0;
+        public int concurrencyID = 0;
         #endregion
 
         #region constructor
@@ -74,7 +74,7 @@ namespace EventPropsClasses
             c.city = this.city;
             c.state = this.state;
             c.zipCode = this.zipCode;
-            c.ConcurrencyID = this.ConcurrencyID;
+            c.concurrencyID = this.concurrencyID;
             return c;
         }
 
@@ -97,7 +97,7 @@ namespace EventPropsClasses
             this.city= c.city;
             this.state= c.state;
             this.zipCode= c.zipCode;
-            this.ConcurrencyID = c.ConcurrencyID;
+            this.concurrencyID = c.concurrencyID;
         }
 
         public void SetState(DBDataReader dr)
@@ -107,8 +107,8 @@ namespace EventPropsClasses
             this.address = (string)dr["Address"];
             this.city = (string)dr["City"];
             this.state = (string)dr["State"];
-            this.zipCode = (string)dr["ZipCode"];
-            this.ConcurrencyID = (Int32)dr["ConcurrencyID"];
+            this.zipCode = ((string)dr["ZipCode"]).Trim();
+            this.concurrencyID = (Int32)dr["ConcurrencyID"];
         }
     
         #endregion
