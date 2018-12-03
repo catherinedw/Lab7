@@ -106,7 +106,7 @@ namespace EventPropsClasses
             this.name = (string)dr["Name"];
             this.address = (string)dr["Address"];
             this.city = (string)dr["City"];
-            this.state = (string)dr["State"];
+            this.state = ((string)dr["State"]).Trim();
             this.zipCode = ((string)dr["ZipCode"]).Trim();
             this.concurrencyID = (Int32)dr["ConcurrencyID"];
         }

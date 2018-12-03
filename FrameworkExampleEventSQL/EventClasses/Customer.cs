@@ -206,7 +206,7 @@ namespace EventClasses
                     if (value.Length >= 1 && value.Length <= 2)
                     {
                         mRules.RuleBroken("State", false);
-                        ((CustomerProps)mProps).address = value;
+                        ((CustomerProps)mProps).state = value;
                         mIsDirty = true;
                     }
 

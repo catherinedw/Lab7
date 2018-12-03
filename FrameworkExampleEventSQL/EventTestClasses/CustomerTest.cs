@@ -48,7 +48,9 @@ namespace CustomerTestClasses
 
             c.CustomerName = "Daisy Duck";
             c.Address = "12 Banana Ave";
-
+            c.City = "Islamorada";
+            c.State = "FL";
+            c.ZipCode = "87899";
 
             c.Save();
 
@@ -65,19 +67,22 @@ namespace CustomerTestClasses
         [Test]
         public void TestUpdate()
         {
-            Customer c = new Customer(700, dataSource);
+            Customer c = new Customer(1, dataSource);
 
-            c.CustomerName = "Daisy Duck";
-            c.Address = "12 Banana Ave";
+            c.CustomerName = "Molunguri, A";
+            c.Address = "1108 Johanna Bay Drive";
+            c.City = "Birmingham";
+            c.State = "AL";
+            c.ZipCode = "35216-6909";
 
             c.Save();
 
-            Assert.AreEqual(c.CustomerName, "Daisy Duck");
+            Assert.AreEqual(c.CustomerName, "Molunguri, A");
 
-            c.CustomerName = "Danny Duck";
+            c.CustomerName = "Molunguri, B";
 
-            Assert.AreEqual(c.CustomerID, 17);
-            Assert.AreEqual(c.CustomerName, "Danny Duck");
+            Assert.AreEqual(c.CustomerID, 1);
+            Assert.AreEqual(c.CustomerName, "Molunguri, B");
             Console.WriteLine(c.ToString());
         }
         [Test]
