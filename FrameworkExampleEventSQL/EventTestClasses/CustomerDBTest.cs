@@ -10,7 +10,7 @@ using EventDBClasses;
 using System.Data;
 using DBCommand = System.Data.SqlClient.SqlCommand;
 
-namespace EventTestClasses
+namespace CustomerTestClasses
 {
     [TestFixture]
     public class CustomerDBTest
