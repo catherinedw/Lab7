@@ -86,26 +86,18 @@ namespace EventTestClasses
 
             Assert.AreEqual(p.ID, 17);
             Assert.AreEqual(p.ProductCode, "EFGH");
-
+            Console.WriteLine(p.ToString());
         }
         [Test]
         public void TestDelete()
         {
-            Product p = new Product(17, dataSource);
-
-            p.ProductCode = "ABCD";
-            p.Description = "This is a test product";
-            p.Price = 25.99m;
-            p.OnHandQuantity = 10;
-
-            p.Save();
-
-            Assert.AreEqual(p.ID, 17);
+            Product p = new Product(16, dataSource);
 
             p.Delete();
 
-            // Assert.Throws<Exception>(() => new Product(17, dataSource));
+            p.Save();
 
+            Assert.Throws<Exception>(() => new Product(16, dataSource));
         }
 
         [Test]
