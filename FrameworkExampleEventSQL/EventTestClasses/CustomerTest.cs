@@ -65,33 +65,31 @@ namespace CustomerTestClasses
         [Test]
         public void TestUpdate()
         {
-            Customer c = new Customer(17, dataSource);
+            Customer c = new Customer(700, dataSource);
 
-            c.CustomerCode = "ABCD";
-            c.Description = "This is a test Customer";
-            c.Price = 25.99m;
-            c.OnHandQuantity = 10;
+            c.CustomerName = "Daisy Duck";
+            c.Address = "12 Banana Ave";
 
             c.Save();
 
-            Assert.AreEqual(c.CustomerCode, "ABCD");
+            Assert.AreEqual(c.CustomerName, "Daisy Duck");
 
-            c.CustomerCode = "EFGH";
+            c.CustomerName = "Danny Duck";
 
-            Assert.AreEqual(c.ID, 17);
-            Assert.AreEqual(c.CustomerCode, "EFGH");
+            Assert.AreEqual(c.CustomerID, 17);
+            Assert.AreEqual(c.CustomerName, "Danny Duck");
             Console.WriteLine(c.ToString());
         }
         [Test]
         public void TestDelete()
         {
-            Customer c = new Customer(16, dataSource);
+            Customer c = new Customer(697, dataSource);
 
             c.Delete();
 
             c.Save();
 
-            Assert.Throws<Exception>(() => new Customer(16, dataSource));
+            Assert.Throws<Exception>(() => new Customer(697, dataSource));
         }
 
         [Test]
