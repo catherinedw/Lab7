@@ -20,6 +20,9 @@ using System.Data.SqlClient;
 
 using DBCommand = System.Data.SqlClient.SqlCommand;
 
+using DBDataReader = System.Data.SqlClient.SqlDataReader;
+
+
 namespace CustomerTestClasses
 {
     [TestFixture]
@@ -30,7 +33,6 @@ namespace CustomerTestClasses
         [SetUp]
         public void Setup()
         {
-
         }
 
         [Test]
@@ -68,21 +70,12 @@ namespace CustomerTestClasses
         public void TestUpdate()
         {
             Customer c = new Customer(1, dataSource);
-
-            c.CustomerName = "Molunguri, A";
-            c.Address = "1108 Johanna Bay Drive";
-            c.City = "Birmingham";
-            c.State = "AL";
-            c.ZipCode = "35216-6909";
-
+            c.CustomerName = "Molunguri, B";
             c.Save();
 
-            Assert.AreEqual(c.CustomerName, "Molunguri, A");
+            Customer cUpdated = new Customer(1, dataSource);
 
-            c.CustomerName = "Molunguri, B";
-
-            Assert.AreEqual(c.CustomerID, 1);
-            Assert.AreEqual(c.CustomerName, "Molunguri, B");
+            Assert.AreEqual(cUpdated.CustomerName, "Molunguri, B");
             Console.WriteLine(c.ToString());
         }
         [Test]

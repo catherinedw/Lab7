@@ -42,17 +42,6 @@ namespace CustomerTestClasses
         }
 
         [Test]
-        public void TestNewEventConstructor()
-        {
-            /*
-            // not in Data Store - no id
-            Event e = new Event(dataSource);
-            Console.WriteLine(e.ToString());
-            Assert.Greater(e.ToString().Length, 1);
-            */
-        }
-
-        [Test]
         public void TestRetrieve()
         {
             props = (CustomerProps)db.Retrieve(1);
@@ -61,7 +50,6 @@ namespace CustomerTestClasses
             Assert.AreEqual("Birmingham", props.city);
             Assert.AreEqual("AL", props.state);
             Assert.AreEqual("35216-6909", props.zipCode);
-  
         }
 
         [Test]
@@ -80,31 +68,36 @@ namespace CustomerTestClasses
 
             props = (CustomerProps)db.Retrieve(700);
             Assert.AreEqual("Daisy Duck", props.name);
-            //Assert.AreEqual(99.99, props.price);
         }
 
         [Test]
         public void TestDelete()
         {
-            //CustomerProps c2 = (CustomerProps)db.Delete(testc);
+            CustomerProps c2 = (CustomerProps)db.Retrieve(1);
+            db.Delete(c2);
+
+            Assert.Throws<Exception>( () => db.Retrieve(1) );
         }
 
         [Test]
         public void TestUpdate()
         {
-            /*
-            CustomerProps c2 = (CustomerProps)db.Update(testc);
-            c2.customerID = 1;
-            c2.city = "Birminghamshire";
+            CustomerProps c = (CustomerProps)db.Retrieve(1);
+            c.city = "Birminghamshire";
+            db.Update(c);
 
-            Assert.AreEqual(c2.customerID, 1);
-            Assert.AreEqual(c2.ConcurrencyID, 1);
-            Assert.AreEqual(c2.city,  "Birminghamshire");
+            c = (CustomerProps)db.Retrieve(1);
+            Assert.AreEqual("Birminghamshire", c.city);
+        }
 
-            props = (ProductProps)db.Retrieve(1);
-            Assert.AreEqual("AL", props.state);
-            Assert.AreEqual("Birminghamshire", props.city);
-            */
+        [Test]
+        public void TestResetDatabase()
+        {
+           // CustomerSQLDB db = new CustomerSQLDB(dataSource);
+            DBCommand command = new DBCommand();
+            command.CommandText = "usp_testingResetData";
+            command.CommandType = CommandType.StoredProcedure;
+            db.RunNonQueryProcedure(command);
         }
     }
 }

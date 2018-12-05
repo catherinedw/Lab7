@@ -211,8 +211,9 @@ namespace EventDBClasses
             CustomerProps props = (CustomerProps)p;
 
             DBCommand command = new DBCommand();
-
+            command.CommandText = "usp_CustomerUpdate";
             command.CommandType = CommandType.StoredProcedure;
+        
             command.Parameters.Add("@CustomerID", SqlDbType.Int);
             command.Parameters.Add("@Name", SqlDbType.VarChar);
             command.Parameters.Add("@Address", SqlDbType.VarChar);
@@ -220,7 +221,6 @@ namespace EventDBClasses
             command.Parameters.Add("@State", SqlDbType.Char);
             command.Parameters.Add("@ZipCode", SqlDbType.Char);
             command.Parameters.Add("@ConcurrencyID", SqlDbType.Int);
-            command.Parameters[0].Direction = ParameterDirection.Output;
             command.Parameters["@CustomerID"].Value = props.customerID;
             command.Parameters["@Name"].Value = props.name;
             command.Parameters["@Address"].Value = props.address;
@@ -288,6 +288,7 @@ namespace EventDBClasses
                     mConnection.Close();
             }
         }
+
 
         /*
     // Shows you how to use a data table rather than a list of objects
